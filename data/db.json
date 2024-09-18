@@ -1,0 +1,48 @@
+{
+  "api.contacts": [
+    {
+      "id": "e012c7f6-3ccd-44a6-a309-b75dc7462c62",
+      "name": "هادی",
+      "lastName": "کریمی",
+      "fullName": "هادی کریمی",
+      "email": "karimi1382hadi@gmail.com",
+      "phoneNumber": "09105244151",
+      "avatar": "/src/assets/img/contact.png",
+      "favorite": true,
+      "checked": false
+    },
+    {
+      "id": "66a3710f-ac8d-4245-ba75-bb28bb219f9a",
+      "name": "آریو",
+      "lastName": "برزن",
+      "fullName": "آریو برزن",
+      "email": "barzan1382ario@gmail.com",
+      "phoneNumber": "09105244151",
+      "avatar": "/src/assets/img/contact.png",
+      "favorite": true,
+      "checked": false
+    },
+    {
+      "id": "206ec940-dcfc-4415-9022-df3f4bb3a595",
+      "name": "امیر",
+      "lastName": "کریمی",
+      "fullName": "امیر کریمی",
+      "email": "karimi1385amir@gmail.com",
+      "phoneNumber": "09370545400",
+      "avatar": "/src/assets/img/contact.png",
+      "favorite": false,
+      "checked": false
+    },
+    {
+      "id": "154cb7c3-048b-4301-8471-acaed21f5e3b",
+      "name": "cod",
+      "lastName": "mobile",
+      "fullName": "cod mobile",
+      "email": "codmobile@gmail.com",
+      "phoneNumber": "09123456789",
+      "avatar": "blob:http://localhost:5173/c38168cf-7d12-4f05-9298-c6f3a31e1c42",
+      "favorite": false,
+      "checked": false
+    }
+  ]
+}
