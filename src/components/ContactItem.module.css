@@ -1,0 +1,143 @@
+.ContactItem {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.3s ease;
+}
+
+.ContactItem:hover {
+  background-color: var(--color-neutral-200);
+}
+
+.ContactItem.checked {
+  background-color: var(--color-neutral-100);
+}
+
+.ContactItem:not(:last-child) {
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.ContactAvatar {
+  display: flex;
+  position: relative;
+}
+
+.ContactAvatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ContactItem:not(.notHover):hover img,
+.ContactItem.checked img {
+  opacity: 0;
+}
+
+.ContactAvatar input {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.ContactItem:not(.notHover):hover input,
+.ContactItem.checked input {
+  opacity: 1;
+}
+
+.ContactInfo {
+  display: flex;
+  width: calc(100% - 200px);
+}
+
+.ContactInfo div {
+  font-size: 14px;
+}
+
+.ContactInfo div:nth-child(1),
+.ContactInfo div:nth-child(3) {
+  width: 25%;
+}
+
+.ContactInfo div:nth-child(2) {
+  width: 50%;
+}
+
+.ContactAction {
+  width: 120px;
+  display: flex;
+}
+
+.ContactAction button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ContactAction button svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.ContactAction button:hover {
+  background-color: var(--color-neutral-500);
+}
+
+.ContactAction div {
+  position: relative;
+}
+
+.contactOption {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 250px;
+  padding: 10px 0;
+  background-color: var(--color-white);
+  border-radius: var(--sm-radius);
+  box-shadow: 0 3px 10px rgb(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+.contactOption button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0 12px;
+  border-radius: 0;
+}
+
+@media (max-width: 575.98px) {
+  .ContactInfo {
+    width: calc(100% - 70px);
+  }
+
+  .ContactAction {
+    display: none;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .ContactInfo div:nth-child(1) {
+    width: 100%;
+  }
+
+  .ContactInfo div:nth-child(2),
+  .ContactInfo div:nth-child(3) {
+    display: none;
+  }
+}

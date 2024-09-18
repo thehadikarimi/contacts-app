@@ -1,0 +1,131 @@
+.ContactForm {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.contactAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactAvatar label {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+}
+
+.contactAvatar label input {
+  display: none;
+}
+
+.contactAvatar label img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.contactAvatar button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 42px;
+  height: 42px;
+  text-align: center;
+  background-color: var(--color-primary-500);
+  border: 3px solid var(--color-white);
+  border-radius: 50%;
+  outline: none;
+  pointer-events: none;
+}
+
+.contactAvatar button svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-white);
+  stroke: var(--color-white);
+  vertical-align: middle;
+}
+
+.contactFormInner {
+  margin-top: 50px;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+.inputContainer:not(:first-child) {
+  margin-top: 30px;
+}
+
+.inputContainer > div:first-child {
+  width: 50px;
+}
+
+.inputContainer > div:last-child {
+  width: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.inputContainer svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--color-neutral-700);
+}
+
+.inputFields {
+  position: relative;
+  width: 100%;
+}
+
+.inputContainer label {
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  margin: 0px 7px;
+  padding: 0 5px;
+  background-color: var(--color-white);
+  transform: translateY(-50%);
+}
+
+.inputContainer input {
+  width: 100%;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid var(--color-neutral-600);
+  border-radius: var(--sm-radius);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.inputContainer input:focus {
+  border-color: var(--color-primary-700);
+}
+
+.submitBtnContainer {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.submitBtnContainer button {
+  font-size: 14px;
+  color: var(--color-white);
+  background-color: var(--color-primary-500);
+  padding: 8px 24px;
+  border: none;
+  border-radius: 30px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitBtnContainer button:hover {
+  background-color: var(--color-primary-700);
+}

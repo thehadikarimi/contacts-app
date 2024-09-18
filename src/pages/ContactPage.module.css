@@ -1,0 +1,147 @@
+.editContact {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.editContactInner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-white);
+  z-index: 1;
+}
+
+.editContactInner a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.editContactInner a svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.editContactInner a:hover {
+  background-color: var(--color-neutral-500);
+}
+
+.editContactInner h2 {
+  font-size: 20px;
+}
+
+.contactContainer {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.contactAction {
+  margin-bottom: 30px;
+}
+
+.contactAction button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contactAction button svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.contactAction button:hover {
+  background-color: var(--color-neutral-500);
+}
+
+.contactHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.contactAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactAvatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.contactHeader h2 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.contactDetails {
+  padding: 15px;
+  background-color: var(--color-neutral-200);
+  border-radius: var(--lg-radius);
+  margin-top: 30px;
+}
+
+.contactDetails h3 {
+  font-size: 16px;
+}
+
+.contactDetails ul {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.contactDetails ul li {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  line-height: 2;
+}
+
+.contactDetails ul li:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+.contactDetails ul li svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--color-neutral-700);
+  vertical-align: middle;
+}
+
+.contactDetails ul li a {
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.contactDetails ul li a:hover {
+  color: var(--color-primary-500);
+}
+
+@media (max-width: 767.98px) {
+  .contactAvatar img {
+    width: 100px;
+    height: 100px;
+  }
+}

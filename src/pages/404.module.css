@@ -1,0 +1,48 @@
+.notFound {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.notFoundImg {
+  width: 100%;
+  text-align: center;
+}
+
+.notFoundImg img {
+  width: 100%;
+  max-width: 350px;
+}
+
+.notFoundContent {
+  width: 100%;
+  text-align: center;
+}
+
+.notFoundContent h2 {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+.notFoundContent a {
+  font-size: 14px;
+  padding: 8px 12px;
+  color: var(--color-white);
+  background-color: var(--color-primary-500);
+  border-radius: var(--sm-radius);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.notFoundContent a:hover {
+  background-color: var(--color-primary-700);
+}
+
+@media (max-width: 767.98px) {
+  .notFound {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,47 @@
+@font-face {
+  font-family: Vazirmatn;
+  src: url("./assets/fonts/Vazirmatn-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Vazirmatn;
+  src: url("./assets/fonts/Vazirmatn-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --sm-radius: 4px;
+  --md-radius: 8px;
+  --lg-radius: 16px;
+  --xl-radius: 32px;
+  --font-family: Vazirmatn, Inter, system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  --color-white: #fff;
+  --color-dark-500: #14151b;
+  --color-dark-700: #090b10;
+  --color-success: #2e7b32;
+  --color-error: #d32f2f;
+  --color-primary-500: #2860e6;
+  --color-primary-700: #1c49bc;
+  --color-secondary-500: #fea000;
+  --color-secondary-700: #e59000;
+  --color-neutral-100: #f1f2f4;
+  --color-neutral-200: #f6f7f8;
+  --color-neutral-500: #e4e7eb;
+  --color-neutral-600: #d3d8e6;
+  --color-neutral-700: #9e9fb1;
+  --color-neutral-800: #767790;
+  --color-neutral-900: #5a5c7a;
+  --background-overlay: #00000066;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  color: var(--color-dark-500);
+}

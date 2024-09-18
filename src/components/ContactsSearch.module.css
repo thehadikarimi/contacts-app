@@ -1,0 +1,116 @@
+.contactsHeader {
+  margin-bottom: 30px;
+  border-bottom: 1px solid var(--color-neutral-500);
+}
+
+.contactsHeaderSearch {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.contactsHeaderSearch h2 {
+  font-size: 20px;
+  width: 250px;
+}
+
+.contactsHeaderSearch > div {
+  position: relative;
+  width: calc(100% - 250px);
+  border: 1px solid var(--color-neutral-500);
+  border-radius: 30px;
+  padding: 0 8px;
+}
+
+.contactsHeaderSearch input {
+  border: none;
+  outline: none;
+  width: calc(100% - 40px);
+  height: 100%;
+  padding: 0 8px;
+}
+
+.contactsHeaderSearch button {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+.contactsHeaderSearch button svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  fill: var(--color-neutral-900);
+}
+
+.searchResult {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  padding: 8px 0;
+  background-color: var(--color-white);
+  border-radius: var(--md-radius);
+  box-shadow: 0 3px 10px rgb(0, 0, 0, 0.15);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  z-index: 1;
+}
+
+.searchResultItem {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 5px 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.searchResultItem:hover {
+  background-color: var(--color-neutral-200);
+}
+
+.searchResultItem:not(:last-child) {
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.searchResultItem div:first-child {
+  display: flex;
+}
+
+.searchResultItem div:last-child {
+  width: calc(100% - 47px);
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchResultItem img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.searchResultItem span {
+  font-size: 14px;
+}
+
+@media (max-width: 767.98px) {
+  .contactsHeaderSearch h2 {
+    display: none;
+  }
+
+  .contactsHeaderSearch > div {
+    width: 100%;
+  }
+
+  .searchResultItem div:last-child span:last-child {
+    display: none;
+  }
+}
