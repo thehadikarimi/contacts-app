@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { act, createContext, useContext, useEffect, useReducer } from "react";
 import api from "../services/config";
 
 const ContactsContext = createContext();
@@ -11,7 +11,12 @@ function ContactsProvider({ children }) {
       case "SUCCESS":
         return { loading: false, data: action.payload, error: "" };
       case "FAILED":
-        return { loading: false, data: [], error: action.payload };
+        return { loading: false, data: state.data, error: action.payload };
+      case "FAVORITE":
+        const { id, favorite } = action.payload;
+        const contact = state.data.find((contact) => contact.id === id);
+        contact.favorite = favorite;
+        return { loading: false, data: [...state.data], error: "" };
       default:
         throw new Error("Invalid Action!");
     }
