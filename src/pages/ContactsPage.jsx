@@ -12,14 +12,16 @@ import contactsList from "../constants/contactsList";
 import { saveToLocalStorage } from "../helpers/helper";
 
 import styles from "./ContactsPage.module.css";
+import { useContacts } from "../context/ContactsContext";
 
 function ContactsPage() {
-  const [contacts, setContacts] = useState(contactsList);
+  const { state: contacts, dispatch } = useContacts();
+  const [contactss, setContacts] = useState(contactsList);
   const [checkedAll, setCheckedAll] = useState(false);
   const navigate = useNavigate();
 
   const favoriteHandler = (id) => {
-    const targetContact = contacts.find((contact) => contact.id === id);
+    const targetContact = contacts.data.find((contact) => contact.id === id);
     targetContact.favorite = !targetContact.favorite;
     setContacts((contacts) => [...contacts]);
     saveToLocalStorage(contacts);
@@ -49,31 +51,31 @@ function ContactsPage() {
   return (
     <>
       <div className={styles.contactsContainer}>
-        <ContactsHeader
+        {/* <ContactsHeader
           contacts={contacts}
           setContacts={setContacts}
           setCheckedAll={setCheckedAll}
-        />
-        {!contacts.length ? (
+        /> */}
+        {!contacts.data.length ? (
           <div className={styles.noContact}>
             <span>هیچ مخاطبی یافت نشد</span>
           </div>
         ) : (
           <>
-            <FavoriteContacts
+            {/* <FavoriteContacts
               contacts={contacts}
               favoriteHandler={favoriteHandler}
               deleteHandler={deleteHandler}
               checkedHandler={checkedHandler}
-            />
+            /> */}
             <div style={{ marginBottom: "10px" }}>
               <div style={{ marginBottom: "10px" }}>
                 <h3 style={{ fontSize: "16px" }}>
-                  مخاطبین ({contacts.length})
+                  مخاطبین ({contacts.data.length})
                 </h3>
               </div>
               <div>
-                {contacts.map((contact) => (
+                {contacts.data.map((contact) => (
                   <ContactItem
                     key={contact.id}
                     data={contact}
