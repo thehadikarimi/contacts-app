@@ -12,11 +12,6 @@ function ContactsProvider({ children }) {
         return { loading: false, data: action.payload, error: "" };
       case "FAILED":
         return { loading: false, data: state.data, error: action.payload };
-      case "FAVORITE":
-        const { id, favorite } = action.payload;
-        const contact = state.data.find((contact) => contact.id === id);
-        contact.favorite = favorite;
-        return { loading: false, data: [...state.data], error: "" };
       default:
         throw new Error("Invalid Action!");
     }

@@ -22,13 +22,19 @@ function ContactsPage() {
     const favorite = !targetContact.favorite;
     try {
       await api.patch(`/api.contacts/${id}`, { favorite });
-      dispatch({ type: "FAVORITE", payload: { id, favorite } });
+
+      try {
+        const data = await api.get("/api.contacts");
+        dispatch({ type: "SUCCESS", payload: data });
+      } catch (error) {
+        return toast.error(error.message);
+      }
+      
       favorite
         ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
         : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
     } catch (error) {
-      dispatch({ type: "FAILED", payload: error.message });
-      toast.error(error.message);
+      return toast.error(error.message);
     }
   };
 
@@ -43,9 +49,13 @@ function ContactsPage() {
     <>
       <div className={styles.contactsContainer}>
         {/* <ContactsHeader /> */}
-        {!contacts.data.length ? (
+        {!contacts.data.length || contacts.error ? (
           <div className={styles.noContact}>
-            <span>هیچ مخاطبی یافت نشد</span>
+            {contacts.error ? (
+              <span>{contacts.error}</span>
+            ) : (
+              <span>هیچ مخاطبی یافت نشد</span>
+            )}
           </div>
         ) : (
           <>
