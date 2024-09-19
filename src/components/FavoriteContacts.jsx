@@ -1,7 +1,7 @@
 import { useContacts } from "../context/ContactsContext";
 import ContactItem from "./ContactItem";
 
-function FavoriteContacts({ favoriteHandler, deleteHandler }) {
+function FavoriteContacts() {
   const { state: contacts } = useContacts();
   const favoriteContacts = contacts.data.filter(
     (contact) => contact.favorite === true
@@ -18,13 +18,7 @@ function FavoriteContacts({ favoriteHandler, deleteHandler }) {
       </div>
       <div>
         {favoriteContacts.map((contact) => (
-          <ContactItem
-            key={contact.id}
-            data={contact}
-            favoriteHandler={favoriteHandler}
-            deleteHandler={deleteHandler}
-            notHover={true}
-          />
+          <ContactItem key={contact.id} data={contact} notHover={true} />
         ))}
       </div>
     </div>

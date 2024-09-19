@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoAddOutline } from "react-icons/io5";
 
@@ -9,33 +9,12 @@ import FavoriteContacts from "../components/FavoriteContacts";
 import Loader from "../components/Loader";
 
 import { useContacts } from "../context/ContactsContext";
-import api from "../services/config";
 
 import styles from "./ContactsPage.module.css";
-import { updateContacts } from "../helpers/helper";
 
 function ContactsPage() {
-  const { state: contacts, dispatch } = useContacts();
+  const { state: contacts } = useContacts();
   const navigate = useNavigate();
-
-  const favoriteHandler = async (id) => {
-    const targetContact = contacts.data.find((contact) => contact.id === id);
-    const favorite = !targetContact.favorite;
-    try {
-      await api.patch(`/api.contacts/${id}`, { favorite });
-      favorite
-        ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
-        : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
-    } catch (error) {
-      return toast.error(error.message);
-    }
-    updateContacts(dispatch, toast);
-  };
-
-  const deleteHandler = (id) => {
-    const newContacts = contacts.filter((contact) => contact.id !== id);
-    toast.success("مخاطب با موفقیت حذف شد.");
-  };
 
   if (contacts.loading) return <Loader />;
 
@@ -53,10 +32,7 @@ function ContactsPage() {
           </div>
         ) : (
           <>
-            <FavoriteContacts
-              favoriteHandler={favoriteHandler}
-              deleteHandler={deleteHandler}
-            />
+            <FavoriteContacts />
             <div style={{ marginBottom: "10px" }}>
               <div style={{ marginBottom: "10px" }}>
                 <h3 style={{ fontSize: "16px" }}>
@@ -65,12 +41,7 @@ function ContactsPage() {
               </div>
               <div>
                 {contacts.data.map((contact) => (
-                  <ContactItem
-                    key={contact.id}
-                    data={contact}
-                    favoriteHandler={favoriteHandler}
-                    deleteHandler={deleteHandler}
-                  />
+                  <ContactItem key={contact.id} data={contact} />
                 ))}
               </div>
             </div>

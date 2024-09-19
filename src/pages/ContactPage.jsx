@@ -21,16 +21,19 @@ import ContactForm from "../components/ContactForm";
 import Loader from "../components/Loader";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
-
-import styles from "./ContactPage.module.css";
 import { updateContacts } from "../helpers/helper";
 
+import styles from "./ContactPage.module.css";
+import Modal from "../components/Modal";
+
 function ContactPage() {
-  const { id } = useParams();
   const { dispatch } = useContacts();
+
+  const { id } = useParams();
   const [contact, setContact] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const isEdit = searchParams.get("edit");
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const getContact = async () => {
@@ -52,12 +55,16 @@ function ContactPage() {
     getContact();
   };
 
-  const deleteHandler = () => {
-    const newContacts = contacts.filter((contact) => contact.id !== id);
-    toast.success("مخاطب با موفقیت حذف شد.");
+  const deleteHandler = async () => {
+    try {
+      await api.delete(`/api.contacts/${id}`);
+      toast.success("مخاطب با موفقیت حذف شد.");
+      setIsOpen(false);
+    } catch (error) {
+      return toast.error(error.message);
+    }
+    updateContacts(dispatch, toast);
     setTimeout(() => {
-      setContacts(newContacts);
-      saveToLocalStorage(newContacts);
       navigate("/contacts");
     }, 3000);
   };
@@ -83,7 +90,12 @@ function ContactPage() {
       ) : (
         <div className={styles.contactContainer}>
           <div className={styles.contactAction}>
-            <button onClick={deleteHandler}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(true);
+              }}
+            >
               <RiDeleteBin6Line />
             </button>
             <button onClick={() => setSearchParams("edit=1")}>
@@ -127,6 +139,14 @@ function ContactPage() {
         </div>
       )}
       <ToastContainer rtl={true} autoClose={2000} pauseOnFocusLoss={false} />
+      {!!isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          title="حذف از مخاطبین؟"
+          desc="این مخاطب از لیست مخاطبین شما حذف می شود. آیا اطمینان دارید؟"
+          deleteHandler={deleteHandler}
+        />
+      )}
     </>
   );
 }

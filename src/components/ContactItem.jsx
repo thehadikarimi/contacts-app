@@ -3,19 +3,51 @@ import { useNavigate } from "react-router-dom";
 import { MdFavorite, MdFavoriteBorder, MdOutlineEdit } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiDotsVertical } from "react-icons/hi";
+import { toast } from "react-toastify";
 
 import avatarImg from "../assets/img/contact.png";
 
+import Modal from "./Modal";
+import api from "../services/config";
+import { useContacts } from "../context/ContactsContext";
+import { updateContacts } from "../helpers/helper";
+
 import styles from "./ContactItem.module.css";
 
-function ContactItem({ data, favoriteHandler, deleteHandler, notHover }) {
+function ContactItem({ data, notHover }) {
+  const { dispatch } = useContacts();
+
   const { id, fullName, email, phoneNumber, avatar, favorite } = data;
   const [showOption, setShowOption] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const openPageContact = () => {
     navigate(`/contacts/${id}`);
+  };
+
+  const favoriteHandler = async () => {
+    try {
+      await api.patch(`/api.contacts/${id}`, { favorite: !favorite });
+      favorite
+        ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
+        : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
+    } catch (error) {
+      return toast.error(error.message);
+    }
+    updateContacts(dispatch, toast);
+  };
+
+  const deleteHandler = async () => {
+    try {
+      await api.delete(`/api.contacts/${id}`);
+      toast.success("مخاطب با موفقیت حذف شد.");
+      setIsOpen(false);
+    } catch (error) {
+      return toast.error(error.message);
+    }
+    updateContacts(dispatch, toast);
   };
 
   const showOptionHandler = () => {
@@ -33,76 +65,86 @@ function ContactItem({ data, favoriteHandler, deleteHandler, notHover }) {
   };
 
   return (
-    <div className={contactClassHandler()} onClick={openPageContact}>
-      <div className={styles.ContactAvatar}>
-        <img src={avatar ? avatar : avatarImg} />
-        <input
-          type="checkbox"
-          checked={isChecked}
-          onClick={(e) => {
-            e.stopPropagation();
-            checkedHandler(id);
-          }}
-          onChange={() => setIsChecked(!isChecked)}
-        />
-      </div>
-      <div className={styles.ContactInfo}>
-        <div>
-          <span>{fullName}</span>
+    <>
+      <div className={contactClassHandler()} onClick={openPageContact}>
+        <div className={styles.ContactAvatar}>
+          <img src={avatar ? avatar : avatarImg} />
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onClick={(e) => {
+              e.stopPropagation();
+              checkedHandler(id);
+            }}
+            onChange={() => setIsChecked(!isChecked)}
+          />
         </div>
-        <div>
-          <span>{email}</span>
+        <div className={styles.ContactInfo}>
+          <div>
+            <span>{fullName}</span>
+          </div>
+          <div>
+            <span>{email}</span>
+          </div>
+          <div>
+            <span>{phoneNumber}</span>
+          </div>
         </div>
-        <div>
-          <span>{phoneNumber}</span>
-        </div>
-      </div>
-      <div className={styles.ContactAction}>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            favoriteHandler(id);
-          }}
-        >
-          {favorite ? (
-            <MdFavorite fill="var(--color-error)" />
-          ) : (
-            <MdFavoriteBorder />
-          )}
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/contacts/${id}?edit=1`);
-          }}
-        >
-          <MdOutlineEdit />
-        </button>
-        <div>
+        <div className={styles.ContactAction}>
           <button
             onClick={(e) => {
               e.stopPropagation();
-              showOptionHandler();
+              favoriteHandler();
             }}
           >
-            <HiDotsVertical />
+            {favorite ? (
+              <MdFavorite fill="var(--color-error)" />
+            ) : (
+              <MdFavoriteBorder />
+            )}
           </button>
-          {showOption && (
-            <span className={styles.contactOption}>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  deleteHandler(id);
-                }}
-              >
-                <RiDeleteBin6Line />
-                <span>حذف کردن</span>
-              </button>
-            </span>
-          )}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/contacts/${id}?edit=1`);
+            }}
+          >
+            <MdOutlineEdit />
+          </button>
+          <div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                showOptionHandler();
+              }}
+            >
+              <HiDotsVertical />
+            </button>
+            {showOption && (
+              <span className={styles.contactOption}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(true);
+                  }}
+                >
+                  <RiDeleteBin6Line />
+                  <span>حذف کردن</span>
+                </button>
+              </span>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      {!!isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          title="حذف از مخاطبین؟"
+          desc="این مخاطب از لیست مخاطبین شما حذف می شود. آیا اطمینان دارید؟"
+          deleteHandler={deleteHandler}
+        />
+      )}
+    </>
   );
 }
 
