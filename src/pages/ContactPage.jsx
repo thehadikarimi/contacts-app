@@ -19,28 +19,37 @@ import { FiArrowRight } from "react-icons/fi";
 
 import ContactForm from "../components/ContactForm";
 import Loader from "../components/Loader";
-
-import contactsList from "../constants/contactsList";
-import { saveToLocalStorage } from "../helpers/helper";
+import api from "../services/config";
+import { useContacts } from "../context/ContactsContext";
 
 import styles from "./ContactPage.module.css";
+import { updateContacts } from "../helpers/helper";
 
 function ContactPage() {
   const { id } = useParams();
-  const [contacts, setContacts] = useState(contactsList);
-  const contact = contacts.find((contact) => contact.id === id);
+  const { dispatch } = useContacts();
+  const [contact, setContact] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const isEdit = searchParams.get("edit");
   const navigate = useNavigate();
 
-  const favoriteHandler = () => {
-    const targetContact = contacts.find((contact) => contact.id === id);
-    targetContact.favorite = !targetContact.favorite;
-    setContacts((contacts) => [...contacts]);
-    saveToLocalStorage(contacts);
-    targetContact.favorite
-      ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
-      : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
+  const getContact = async () => {
+    const contact = await api.get(`/api.contacts/${id}`);
+    setContact(contact);
+  };
+
+  const favoriteHandler = async () => {
+    const favorite = !contact.favorite;
+    try {
+      await api.patch(`/api.contacts/${id}`, { favorite });
+      favorite
+        ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
+        : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
+    } catch (error) {
+      return toast.error(error.message);
+    }
+    updateContacts(dispatch, toast);
+    getContact();
   };
 
   const deleteHandler = () => {
@@ -54,8 +63,7 @@ function ContactPage() {
   };
 
   useEffect(() => {
-    const newContacts = JSON.parse(localStorage.getItem("contactsList")) || [];
-    setContacts(newContacts);
+    getContact();
   }, [searchParams]);
 
   if (!contact) return <Loader />;

@@ -12,6 +12,7 @@ import { useContacts } from "../context/ContactsContext";
 import api from "../services/config";
 
 import styles from "./ContactsPage.module.css";
+import { updateContacts } from "../helpers/helper";
 
 function ContactsPage() {
   const { state: contacts, dispatch } = useContacts();
@@ -22,20 +23,13 @@ function ContactsPage() {
     const favorite = !targetContact.favorite;
     try {
       await api.patch(`/api.contacts/${id}`, { favorite });
-
-      try {
-        const data = await api.get("/api.contacts");
-        dispatch({ type: "SUCCESS", payload: data });
-      } catch (error) {
-        return toast.error(error.message);
-      }
-      
       favorite
         ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
         : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
     } catch (error) {
       return toast.error(error.message);
     }
+    updateContacts(dispatch, toast);
   };
 
   const deleteHandler = (id) => {
@@ -48,7 +42,7 @@ function ContactsPage() {
   return (
     <>
       <div className={styles.contactsContainer}>
-        {/* <ContactsHeader /> */}
+        <ContactsHeader />
         {!contacts.data.length || contacts.error ? (
           <div className={styles.noContact}>
             {contacts.error ? (
@@ -59,10 +53,10 @@ function ContactsPage() {
           </div>
         ) : (
           <>
-            {/* <FavoriteContacts
+            <FavoriteContacts
               favoriteHandler={favoriteHandler}
               deleteHandler={deleteHandler}
-            /> */}
+            />
             <div style={{ marginBottom: "10px" }}>
               <div style={{ marginBottom: "10px" }}>
                 <h3 style={{ fontSize: "16px" }}>

@@ -5,13 +5,13 @@ import { IoMdDoneAll } from "react-icons/io";
 import { MdIndeterminateCheckBox } from "react-icons/md";
 
 import ContactsSearch from "./ContactsSearch";
-
-import { saveToLocalStorage } from "../helpers/helper";
+import { useContacts } from "../context/ContactsContext";
 
 import styles from "./ContactsHeader.module.css";
 
-function ContactsHeader({ contacts, setContacts, setCheckedAll }) {
-  const checkedContacts = contacts.filter(
+function ContactsHeader() {
+  const { state: contacts, dispatch } = useContacts();
+  const checkedContacts = contacts.data.filter(
     (contact) => contact.checked === true
   );
 

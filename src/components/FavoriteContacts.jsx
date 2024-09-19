@@ -1,12 +1,9 @@
+import { useContacts } from "../context/ContactsContext";
 import ContactItem from "./ContactItem";
 
-function FavoriteContacts({
-  contacts,
-  favoriteHandler,
-  deleteHandler,
-  checkedHandler,
-}) {
-  const favoriteContacts = contacts.filter(
+function FavoriteContacts({ favoriteHandler, deleteHandler }) {
+  const { state: contacts } = useContacts();
+  const favoriteContacts = contacts.data.filter(
     (contact) => contact.favorite === true
   );
 
@@ -26,7 +23,6 @@ function FavoriteContacts({
             data={contact}
             favoriteHandler={favoriteHandler}
             deleteHandler={deleteHandler}
-            checkedHandler={checkedHandler}
             notHover={true}
           />
         ))}

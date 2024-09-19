@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
-
-import contactsList from "../constants/contactsList";
-import { saveToLocalStorage } from "../helpers/helper";
 
 import avatarImg from "../assets/img/contact.png";
 
@@ -12,13 +9,18 @@ import { FaPhoneAlt, FaRegUser } from "react-icons/fa";
 import { IoAddOutline } from "react-icons/io5";
 import { MdOutlineEdit, MdOutlineMail } from "react-icons/md";
 
-import styles from "./ContactForm.module.css";
+import api from "../services/config";
+import { useContacts } from "../context/ContactsContext";
+import { updateContacts } from "../helpers/helper";
 
-function ContactForm({ isEdit, data }) {
-  const [contacts, setContacts] = useState(contactsList);
-  const [contactAvatar, setContactAvatar] = useState(
-    data ? data.avatar : avatarImg
-  );
+import styles from "./ContactForm.module.css";
+import Loader from "./Loader";
+
+function ContactForm({ isEdit }) {
+  const { id } = useParams();
+  const { dispatch } = useContacts();
+  const [contact, setContact] = useState("");
+  const [contactAvatar, setContactAvatar] = useState("");
   const initialData = {
     id: "",
     name: "",
@@ -30,7 +32,6 @@ function ContactForm({ isEdit, data }) {
     favorite: false,
     checked: false,
   };
-  const [contact, setContact] = useState(isEdit ? data : initialData);
   const navigate = useNavigate();
 
   const changeHandler = (e) => {
@@ -47,7 +48,7 @@ function ContactForm({ isEdit, data }) {
     }
   };
 
-  const addHandler = (e) => {
+  const contactHandler = (e) => {
     e.preventDefault();
 
     if (!contact.name) {
@@ -63,18 +64,39 @@ function ContactForm({ isEdit, data }) {
       return toast.error("لطفا شماره تلفن همراه خود را به درستی وارد نمایید");
     }
 
+    const fetchContact = async ([type, data]) => {
+      if (type === "PUT") {
+        try {
+          await api.put(`/api.contacts/${data.id}`, data);
+          toast.success("مخاطب با موفقیت ذخیره شد.");
+          setTimeout(() => {
+            navigate(`/contacts/${data.id}`);
+          }, 3000);
+        } catch (error) {
+          return toast.error(error.message);
+        }
+      }
+      if (type === "POST") {
+        try {
+          await api.post("/api.contacts/", data);
+          toast.success("مخاطب با موفقیت افزوده شد.");
+          setTimeout(() => {
+            navigate("/contacts");
+          }, 3000);
+        } catch (error) {
+          return toast.error(error.message);
+        }
+      }
+      updateContacts(dispatch, toast);
+    };
+
     if (isEdit) {
       const updatedContact = {
         ...contact,
         avatar: contactAvatar,
         fullName: contact.name + " " + contact.lastName,
       };
-      const unUpdatedContacts = contacts.filter(
-        (contact) => contact.id !== updatedContact.id
-      );
-      const newContacts = [...unUpdatedContacts, updatedContact];
-      setContacts(newContacts);
-      saveToLocalStorage(newContacts);
+      fetchContact(["PUT", updatedContact]);
     } else {
       const newContact = {
         ...contact,
@@ -82,31 +104,30 @@ function ContactForm({ isEdit, data }) {
         avatar: contactAvatar,
         fullName: contact.name + " " + contact.lastName,
       };
-      setContacts((contacts) => [...contacts, newContact]);
-      saveToLocalStorage([...contacts, newContact]);
-    }
-
-    if (isEdit) {
-      toast.success("مخاطب با موفقیت ذخیره شد.");
-      setTimeout(() => {
-        navigate(`/contacts/${data.id}`);
-      }, 3000);
-    } else {
-      toast.success("مخاطب با موفقیت افزوده شد.");
-      setTimeout(() => {
-        navigate("/contacts");
-      }, 3000);
+      fetchContact(["POST", newContact]);
     }
   };
 
   useEffect(() => {
-    const newContact = JSON.parse(localStorage.getItem("contactsList")) || [];
-    setContacts(newContact);
+    const contact = async () => {
+      if (isEdit) {
+        const contact = await api.get(`/api.contacts/${id}`);
+        setContact(contact);
+        setContactAvatar(contact.avatar);
+      } else {
+        setContact(initialData);
+        setContactAvatar(avatarImg);
+      }
+    };
+
+    contact();
   }, []);
+
+  if (!contact) return <Loader />;
 
   return (
     <>
-      <form onSubmit={addHandler} className={styles.ContactForm}>
+      <form onSubmit={contactHandler} className={styles.ContactForm}>
         <div className={styles.contactAvatar}>
           <label htmlFor="contact-image">
             <input
