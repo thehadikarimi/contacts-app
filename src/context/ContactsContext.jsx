@@ -4,14 +4,29 @@ import api from "../services/config";
 const ContactsContext = createContext();
 
 function ContactsProvider({ children }) {
-  const initialState = { loading: true, data: [], error: "" };
+  const initialState = {
+    loading: true,
+    contacts: [],
+    error: "",
+    checkedContacts: [],
+  };
 
   const reducer = (state, action) => {
     switch (action.type) {
       case "SUCCESS":
-        return { loading: false, data: action.payload, error: "" };
+        return {
+          loading: false,
+          contacts: action.payload,
+          error: "",
+          checkedContacts: state.checkedContacts,
+        };
       case "FAILED":
-        return { loading: false, data: state.data, error: action.payload };
+        return {
+          loading: false,
+          contacts: state.contacts,
+          error: action.payload,
+          checkedContacts: state.checkedContacts,
+        };
       default:
         throw new Error("Invalid Action!");
     }
@@ -22,8 +37,8 @@ function ContactsProvider({ children }) {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const data = await api.get("/api.contacts");
-        dispatch({ type: "SUCCESS", payload: data });
+        const contacts = await api.get("/api.contacts");
+        dispatch({ type: "SUCCESS", payload: contacts });
       } catch (error) {
         dispatch({ type: "FAILED", payload: error.message });
       }

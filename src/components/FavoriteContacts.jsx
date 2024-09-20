@@ -2,8 +2,10 @@ import { useContacts } from "../context/ContactsContext";
 import ContactItem from "./ContactItem";
 
 function FavoriteContacts() {
-  const { state: contacts } = useContacts();
-  const favoriteContacts = contacts.data.filter(
+  const {
+    state: { contacts },
+  } = useContacts();
+  const favoriteContacts = contacts.filter(
     (contact) => contact.favorite === true
   );
 

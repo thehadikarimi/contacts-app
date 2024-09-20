@@ -7,7 +7,9 @@ import { useContacts } from "../context/ContactsContext";
 import styles from "./ContactsSearch.module.css";
 
 function ContactsSearch() {
-  const { state: contacts } = useContacts();
+  const {
+    state: { contacts },
+  } = useContacts();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const navigate = useNavigate();
@@ -18,7 +20,7 @@ function ContactsSearch() {
 
   const searchHandler = (text) => {
     text = text.toLowerCase().trim();
-    const searchedContacts = contacts.data.filter(
+    const searchedContacts = contacts.filter(
       (contact) =>
         contact.fullName.toLowerCase().trim().includes(text) ||
         contact.email.toLowerCase().trim().includes(text)

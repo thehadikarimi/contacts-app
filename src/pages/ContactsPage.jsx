@@ -13,16 +13,18 @@ import { useContacts } from "../context/ContactsContext";
 import styles from "./ContactsPage.module.css";
 
 function ContactsPage() {
-  const { state: contacts } = useContacts();
+  const {
+    state: { contacts, loading },
+  } = useContacts();
   const navigate = useNavigate();
 
-  if (contacts.loading) return <Loader />;
+  if (loading) return <Loader />;
 
   return (
     <>
       <div className={styles.contactsContainer}>
         <ContactsHeader />
-        {!contacts.data.length || contacts.error ? (
+        {!contacts.length || contacts.error ? (
           <div className={styles.noContact}>
             {contacts.error ? (
               <span>{contacts.error}</span>
@@ -36,11 +38,11 @@ function ContactsPage() {
             <div style={{ marginBottom: "10px" }}>
               <div style={{ marginBottom: "10px" }}>
                 <h3 style={{ fontSize: "16px" }}>
-                  مخاطبین ({contacts.data.length})
+                  مخاطبین ({contacts.length})
                 </h3>
               </div>
               <div>
-                {contacts.data.map((contact) => (
+                {contacts.map((contact) => (
                   <ContactItem key={contact.id} data={contact} />
                 ))}
               </div>

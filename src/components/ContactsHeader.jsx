@@ -10,8 +10,11 @@ import { useContacts } from "../context/ContactsContext";
 import styles from "./ContactsHeader.module.css";
 
 function ContactsHeader() {
-  const { state: contacts, dispatch } = useContacts();
-  const checkedContacts = contacts.data.filter(
+  const {
+    state: { contacts },
+    dispatch,
+  } = useContacts();
+  const checkedContacts = contacts.filter(
     (contact) => contact.checked === true
   );
 

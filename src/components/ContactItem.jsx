@@ -21,7 +21,10 @@ import { updateContacts } from "../helpers/helper";
 import styles from "./ContactItem.module.css";
 
 function ContactItem({ data, notHover }) {
-  const { dispatch } = useContacts();
+  const {
+    state: { checkedContacs },
+    dispatch,
+  } = useContacts();
 
   const { id, fullName, email, phoneNumber, avatar, favorite } = data;
   const [showOption, setShowOption] = useState(false);
