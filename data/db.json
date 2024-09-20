@@ -8,8 +8,7 @@
       "email": "karimi1382hadi@gmail.com",
       "phoneNumber": "09105244151",
       "avatar": "/src/assets/img/contact.png",
-      "favorite": true,
-      "checked": false
+      "favorite": true
     },
     {
       "id": "66a3710f-ac8d-4245-ba75-bb28bb219f9a",
@@ -19,8 +18,7 @@
       "email": "barzan1382ario@gmail.com",
       "phoneNumber": "09105244151",
       "avatar": "/src/assets/img/contact.png",
-      "favorite": true,
-      "checked": false
+      "favorite": true
     },
     {
       "id": "206ec940-dcfc-4415-9022-df3f4bb3a595",
@@ -30,8 +28,7 @@
       "email": "karimi1385amir@gmail.com",
       "phoneNumber": "09370545400",
       "avatar": "/src/assets/img/contact.png",
-      "favorite": false,
-      "checked": false
+      "favorite": false
     },
     {
       "id": "19cb4b3e-c40e-4120-aa54-8e4ebe777fe8",
@@ -41,19 +38,7 @@
       "email": "fsd@gmail.com",
       "phoneNumber": "09777777777",
       "avatar": "/src/assets/img/contact.png",
-      "favorite": false,
-      "checked": false
-    },
-    {
-      "id": "f037fdee-6162-4433-9304-cd5eb69893a6",
-      "name": "ljljx2",
-      "lastName": "xjpoi",
-      "fullName": "ljljx2 xjpoi",
-      "email": "jodj@gmail.com",
-      "phoneNumber": "09555555555",
-      "avatar": "/src/assets/img/contact.png",
-      "favorite": false,
-      "checked": false
+      "favorite": false
     }
   ]
 }

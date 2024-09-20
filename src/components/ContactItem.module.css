@@ -36,18 +36,44 @@
   opacity: 0;
 }
 
-.ContactAvatar input {
+.ContactAvatar div {
+  width: 40px;
+  height: 40px;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.ContactItem:not(.notHover) .ContactAvatar div:hover {
+  background-color: var(--color-neutral-500);
+}
+
+.ContactAvatar input {
+  width: 100%;
+  height: 100%;
   opacity: 0;
   cursor: pointer;
 }
 
-.ContactItem:not(.notHover):hover input,
-.ContactItem.checked input {
+.ContactItem.notHover .ContactAvatar input {
+  pointer-events: none;
+}
+
+.ContactAvatar svg {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ContactItem:not(.notHover):hover .ContactAvatar svg,
+.ContactItem.checked .ContactAvatar svg {
   opacity: 1;
 }
 
@@ -98,6 +124,7 @@
 
 .ContactAction div {
   position: relative;
+  border-radius: 50% 50% 0 0;
 }
 
 .contactOption {

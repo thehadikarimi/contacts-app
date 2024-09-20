@@ -1,4 +1,4 @@
-import { act, createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import api from "../services/config";
 
 const ContactsContext = createContext();

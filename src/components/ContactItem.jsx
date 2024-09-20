@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MdFavorite, MdFavoriteBorder, MdOutlineEdit } from "react-icons/md";
+import {
+  MdCheckBoxOutlineBlank,
+  MdFavorite,
+  MdFavoriteBorder,
+  MdOutlineEdit,
+} from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiDotsVertical } from "react-icons/hi";
+import { IoCheckbox } from "react-icons/io5";
 import { toast } from "react-toastify";
 
 import avatarImg from "../assets/img/contact.png";
@@ -50,10 +56,6 @@ function ContactItem({ data, notHover }) {
     updateContacts(dispatch, toast);
   };
 
-  const showOptionHandler = () => {
-    setShowOption((option) => (option = !option));
-  };
-
   const contactClassHandler = () => {
     if (isChecked) {
       return `${styles.ContactItem} ${styles.checked}`;
@@ -69,15 +71,24 @@ function ContactItem({ data, notHover }) {
       <div className={contactClassHandler()} onClick={openPageContact}>
         <div className={styles.ContactAvatar}>
           <img src={avatar ? avatar : avatarImg} />
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onClick={(e) => {
-              e.stopPropagation();
-              checkedHandler(id);
-            }}
-            onChange={() => setIsChecked(!isChecked)}
-          />
+          <div>
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onClick={(e) => {
+                e.stopPropagation();
+                // checkedHandler(id);
+              }}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            />
+            {isChecked ? (
+              <IoCheckbox style={{ fill: "var(--color-primary-500)" }} />
+            ) : (
+              <MdCheckBoxOutlineBlank
+                style={{ fill: "var(--color-dark-500)" }}
+              />
+            )}
+          </div>
         </div>
         <div className={styles.ContactInfo}>
           <div>
@@ -111,13 +122,12 @@ function ContactItem({ data, notHover }) {
           >
             <MdOutlineEdit />
           </button>
-          <div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                showOptionHandler();
-              }}
-            >
+          <div
+            onMouseEnter={() => setShowOption(true)}
+            onMouseLeave={() => setShowOption(false)}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button>
               <HiDotsVertical />
             </button>
             {showOption && (

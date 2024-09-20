@@ -12,9 +12,9 @@ import { MdOutlineEdit, MdOutlineMail } from "react-icons/md";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
 import { updateContacts } from "../helpers/helper";
+import Loader from "./Loader";
 
 import styles from "./ContactForm.module.css";
-import Loader from "./Loader";
 
 function ContactForm({ isEdit }) {
   const { id } = useParams();
@@ -30,7 +30,6 @@ function ContactForm({ isEdit }) {
     phoneNumber: "",
     avatar: contactAvatar,
     favorite: false,
-    checked: false,
   };
   const navigate = useNavigate();
 

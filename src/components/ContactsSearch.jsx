@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { IoSearch } from "react-icons/io5";
+
+import { useContacts } from "../context/ContactsContext";
 
 import styles from "./ContactsSearch.module.css";
 
-function ContactsSearch({ contacts }) {
+function ContactsSearch() {
+  const { state: contacts } = useContacts();
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  const allContacts = contacts;
   const navigate = useNavigate();
 
   const openPageContact = (id) => {
@@ -17,12 +18,12 @@ function ContactsSearch({ contacts }) {
 
   const searchHandler = (text) => {
     text = text.toLowerCase().trim();
-    const newContacts = allContacts.filter(
+    const searchedContacts = contacts.data.filter(
       (contact) =>
         contact.fullName.toLowerCase().trim().includes(text) ||
         contact.email.toLowerCase().trim().includes(text)
     );
-    setSearchResult(newContacts);
+    setSearchResult(searchedContacts);
   };
 
   const changeHandler = (e) => {
@@ -43,23 +44,29 @@ function ContactsSearch({ contacts }) {
         <button>
           <IoSearch />
         </button>
-        {!!searchResult.length && !!search.length && (
+        {!!search.length && (
           <div className={styles.searchResult}>
-            {searchResult.map((item) => (
-              <div
-                key={item.id}
-                className={styles.searchResultItem}
-                onClick={() => openPageContact(item.id)}
-              >
-                <div>
-                  <img src={item.avatar} />
+            {searchResult.length ? (
+              searchResult.map((item) => (
+                <div
+                  key={item.id}
+                  className={styles.searchResultItem}
+                  onClick={() => openPageContact(item.id)}
+                >
+                  <div>
+                    <img src={item.avatar} />
+                  </div>
+                  <div>
+                    <span>{item.fullName}</span>
+                    <span>{item.email}</span>
+                  </div>
                 </div>
-                <div>
-                  <span>{item.fullName}</span>
-                  <span>{item.email}</span>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p style={{ fontSize: "14px", padding: "10px 12px" }}>
+                هیچ مخاطبی یافت نشد!
+              </p>
+            )}
           </div>
         )}
       </div>
