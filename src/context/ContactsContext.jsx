@@ -27,6 +27,20 @@ function ContactsProvider({ children }) {
           error: action.payload,
           checkedContacts: state.checkedContacts,
         };
+      case "ADD_CHECKED_CONTACT":
+        return {
+          loading: state.loading,
+          contacts: state.contacts,
+          error: state.error,
+          checkedContacts: action.payload,
+        };
+      case "REMOVE_CHECKED_CONTACT":
+        return {
+          loading: state.loading,
+          contacts: state.contacts,
+          error: state.error,
+          checkedContacts: action.payload,
+        };
       default:
         throw new Error("Invalid Action!");
     }

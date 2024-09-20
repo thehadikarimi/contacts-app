@@ -20,7 +20,7 @@ function FavoriteContacts() {
       </div>
       <div>
         {favoriteContacts.map((contact) => (
-          <ContactItem key={contact.id} data={contact} notHover={true} />
+          <ContactItem key={contact.id} data={contact} />
         ))}
       </div>
     </div>

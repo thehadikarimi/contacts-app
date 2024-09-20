@@ -31,7 +31,7 @@
   object-fit: cover;
 }
 
-.ContactItem:not(.notHover):hover img,
+.ContactItem:hover img,
 .ContactItem.checked img {
   opacity: 0;
 }
@@ -49,7 +49,7 @@
   transition: all 0.3s ease;
 }
 
-.ContactItem:not(.notHover) .ContactAvatar div:hover {
+.ContactItem .ContactAvatar div:hover {
   background-color: var(--color-neutral-500);
 }
 
@@ -60,10 +60,6 @@
   cursor: pointer;
 }
 
-.ContactItem.notHover .ContactAvatar input {
-  pointer-events: none;
-}
-
 .ContactAvatar svg {
   position: absolute;
   width: 22px;
@@ -72,7 +68,7 @@
   pointer-events: none;
 }
 
-.ContactItem:not(.notHover):hover .ContactAvatar svg,
+.ContactItem:hover .ContactAvatar svg,
 .ContactItem.checked .ContactAvatar svg {
   opacity: 1;
 }

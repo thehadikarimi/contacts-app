@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -6,41 +7,35 @@ import { MdIndeterminateCheckBox } from "react-icons/md";
 
 import ContactsSearch from "./ContactsSearch";
 import { useContacts } from "../context/ContactsContext";
+import Modal from "./Modal";
 
 import styles from "./ContactsHeader.module.css";
 
 function ContactsHeader() {
   const {
-    state: { contacts },
+    state: { contacts, checkedContacts },
     dispatch,
   } = useContacts();
-  const checkedContacts = contacts.filter(
-    (contact) => contact.checked === true
-  );
+  const [isOpen, setIsOpen] = useState(false);
 
   const selectHandler = () => {
-    contacts.map((contact) => (contact.checked = true));
-    setContacts((contacts) => [...contacts]);
-    setCheckedAll(true);
+    const data = [];
+    contacts.forEach((contact) => data.push(contact.id));
+    dispatch({ type: "ADD_CHECKED_CONTACT", payload: data });
   };
 
   const unSelectHandler = () => {
-    contacts.map((contact) => (contact.checked = false));
-    setContacts((contacts) => [...contacts]);
-    setCheckedAll(false);
+    dispatch({ type: "ADD_CHECKED_CONTACT", payload: [] });
   };
 
   const deleteHandler = () => {
-    const newContacts = contacts.filter((contact) => contact.checked === false);
-    setContacts(newContacts);
-    saveToLocalStorage(newContacts);
     toast.success(`${checkedContacts.length} مخاطب با موفقیت حذف شد.`);
   };
 
   return (
     <>
       <div className={styles.contactsHeader}>
-        <ContactsSearch contacts={contacts} />
+        <ContactsSearch />
         <div className={styles.contactsHeaderRow}>
           {checkedContacts.length ? (
             <div className={styles.contactsHeaderAction}>
@@ -52,7 +47,7 @@ function ContactsHeader() {
                 <button onClick={selectHandler}>
                   <IoMdDoneAll />
                 </button>
-                <button onClick={deleteHandler}>
+                <button onClick={() => setIsOpen(true)}>
                   <RiDeleteBin6Line />
                 </button>
               </div>
@@ -66,6 +61,14 @@ function ContactsHeader() {
           )}
         </div>
       </div>
+      {!!isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          title="حذف مخاطبین انتخاب شده؟"
+          desc="مخاطبین انتخاب شده از لیست مخاطبین شما حذف می شوند. آیا اطمینان دارید؟"
+          deleteHandler={deleteHandler}
+        />
+      )}
     </>
   );
 }

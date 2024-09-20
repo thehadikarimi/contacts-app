@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   MdCheckBoxOutlineBlank,
@@ -20,9 +20,9 @@ import { updateContacts } from "../helpers/helper";
 
 import styles from "./ContactItem.module.css";
 
-function ContactItem({ data, notHover }) {
+function ContactItem({ data }) {
   const {
-    state: { checkedContacs },
+    state: { checkedContacts },
     dispatch,
   } = useContacts();
 
@@ -31,6 +31,10 @@ function ContactItem({ data, notHover }) {
   const [isChecked, setIsChecked] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
+  // it defined for check that contact isChecked or not
+  // it used for condition to set class and change checkbox svg
+  const checkedContact = checkedContacts.find((item) => item === id);
 
   const openPageContact = () => {
     navigate(`/contacts/${id}`);
@@ -59,15 +63,33 @@ function ContactItem({ data, notHover }) {
     updateContacts(dispatch, toast);
   };
 
-  const contactClassHandler = () => {
-    if (isChecked) {
-      return `${styles.ContactItem} ${styles.checked}`;
+  const checkedHandler = () => {
+    if (!isChecked) {
+      checkedContacts.push(id);
+      dispatch({ type: "ADD_CHECKED_CONTACT", payload: checkedContacts });
+    } else {
+      const index = checkedContacts.indexOf(id);
+      index > -1 && checkedContacts.splice(index, 1);
+      dispatch({ type: "REMOVE_CHECKED_CONTACT", payload: checkedContacts });
     }
-    if (notHover) {
-      return `${styles.ContactItem} ${styles.notHover}`;
+  };
+
+  const contactClassHandler = () => {
+    if (checkedContact) {
+      return `${styles.ContactItem} ${styles.checked}`;
     }
     return `${styles.ContactItem}`;
   };
+
+  useEffect(() => {
+    setIsChecked(false);
+    dispatch({ type: "ADD_CHECKED_CONTACT", payload: [] });
+  }, []);
+
+  useEffect(() => {
+    const contact = checkedContact;
+    contact ? setIsChecked(true) : setIsChecked(false);
+  }, [checkedContacts]);
 
   return (
     <>
@@ -80,11 +102,11 @@ function ContactItem({ data, notHover }) {
               checked={isChecked}
               onClick={(e) => {
                 e.stopPropagation();
-                // checkedHandler(id);
+                checkedHandler();
               }}
               onChange={(e) => setIsChecked(e.target.checked)}
             />
-            {isChecked ? (
+            {checkedContact ? (
               <IoCheckbox style={{ fill: "var(--color-primary-500)" }} />
             ) : (
               <MdCheckBoxOutlineBlank
