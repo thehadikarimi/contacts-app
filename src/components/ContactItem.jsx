@@ -36,14 +36,10 @@ function ContactItem({ data }) {
   // it used for condition to set class and change checkbox svg
   const checkedContact = checkedContacts.find((item) => item === id);
 
-  const openPageContact = () => {
-    navigate(`/contacts/${id}`);
-  };
-
   const favoriteHandler = async () => {
     try {
       await api.patch(`/api.contacts/${id}`, { favorite: !favorite });
-      favorite
+      !favorite
         ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
         : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
     } catch (error) {
@@ -82,18 +78,16 @@ function ContactItem({ data }) {
   };
 
   useEffect(() => {
-    setIsChecked(false);
-    dispatch({ type: "ADD_CHECKED_CONTACT", payload: [] });
-  }, []);
-
-  useEffect(() => {
     const contact = checkedContact;
     contact ? setIsChecked(true) : setIsChecked(false);
   }, [checkedContacts]);
 
   return (
     <>
-      <div className={contactClassHandler()} onClick={openPageContact}>
+      <div
+        className={contactClassHandler()}
+        onClick={() => navigate(`/contacts/${id}`)}
+      >
         <div className={styles.ContactAvatar}>
           <img src={avatar ? avatar : avatarImg} />
           <div>

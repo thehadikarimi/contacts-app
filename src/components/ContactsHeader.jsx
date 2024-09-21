@@ -10,6 +10,8 @@ import { useContacts } from "../context/ContactsContext";
 import Modal from "./Modal";
 
 import styles from "./ContactsHeader.module.css";
+import { updateContacts } from "../helpers/helper";
+import api from "../services/config";
 
 function ContactsHeader() {
   const {
@@ -28,8 +30,8 @@ function ContactsHeader() {
     dispatch({ type: "ADD_CHECKED_CONTACT", payload: [] });
   };
 
-  const deleteHandler = () => {
-    toast.success(`${checkedContacts.length} مخاطب با موفقیت حذف شد.`);
+  const deleteHandler = async () => {
+    console.log("delete");
   };
 
   return (
