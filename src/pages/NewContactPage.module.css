@@ -1,0 +1,40 @@
+.addContact {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.addContactInner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-white);
+  z-index: 1;
+}
+
+.addContactInner a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.addContactInner a svg {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+}
+
+.addContactInner a:hover {
+  background-color: var(--color-neutral-500);
+}
+
+.addContactInner h2 {
+  font-size: 20px;
+}

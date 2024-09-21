@@ -43,14 +43,22 @@
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 0 10px 10px;
 }
 
 .contactAction {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
   margin-bottom: 30px;
+  position: sticky;
+  top: 0;
+  background-color: var(--color-white);
+  z-index: 1;
 }
 
-.contactAction button {
+.contactAction button,
+.contactAction a {
   width: 40px;
   height: 40px;
   text-align: center;
@@ -62,13 +70,20 @@
   transition: all 0.3s ease;
 }
 
-.contactAction button svg {
+.contactAction a {
+  display: inline-block;
+  line-height: 40px;
+}
+
+.contactAction button svg,
+.contactAction a svg {
   width: 20px;
   height: 20px;
   vertical-align: middle;
 }
 
-.contactAction button:hover {
+.contactAction button:hover,
+.contactAction a:hover {
   background-color: var(--color-neutral-500);
 }
 

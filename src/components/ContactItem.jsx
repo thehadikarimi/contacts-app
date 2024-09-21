@@ -32,8 +32,8 @@ function ContactItem({ data }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  // it defined for check that contact isChecked or not
-  // it used for condition to set class and change checkbox svg
+  // it is a condition that check a contact is checked or not
+  // it used for contactClassHandler, checkHanlder and checkbox svg
   const checkedContact = checkedContacts.find((item) => item === id);
 
   const favoriteHandler = async () => {
@@ -60,7 +60,7 @@ function ContactItem({ data }) {
   };
 
   const checkedHandler = () => {
-    if (!isChecked) {
+    if (!checkedContact) {
       checkedContacts.push(id);
       dispatch({ type: "ADD_CHECKED_CONTACT", payload: checkedContacts });
     } else {

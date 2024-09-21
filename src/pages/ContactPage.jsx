@@ -83,31 +83,38 @@ function ContactPage() {
             <Link to={`/contacts/${contact.id}`}>
               <FiArrowRight />
             </Link>
-            <h2>{contact.fullName}</h2>
+            <h2>ویرایش مخاطب</h2>
           </div>
-          <ContactForm isEdit={true} data={contact} />
+          <ContactForm isEdit={true} />
         </div>
       ) : (
         <div className={styles.contactContainer}>
           <div className={styles.contactAction}>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsOpen(true);
-              }}
-            >
-              <RiDeleteBin6Line />
-            </button>
-            <button onClick={() => setSearchParams("edit=1")}>
-              <MdOutlineEdit />
-            </button>
-            <button onClick={favoriteHandler}>
-              {contact.favorite ? (
-                <MdFavorite fill="var(--color-error)" />
-              ) : (
-                <MdFavoriteBorder />
-              )}
-            </button>
+            <div>
+              <Link to={`/contacts/`}>
+                <FiArrowRight />
+              </Link>
+            </div>
+            <div>
+              <button onClick={favoriteHandler}>
+                {contact.favorite ? (
+                  <MdFavorite fill="var(--color-error)" />
+                ) : (
+                  <MdFavoriteBorder />
+                )}
+              </button>
+              <button onClick={() => setSearchParams("edit=1")}>
+                <MdOutlineEdit />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(true);
+                }}
+              >
+                <RiDeleteBin6Line />
+              </button>
+            </div>
           </div>
           <div className={styles.contactHeader}>
             <div className={styles.contactAvatar}>
