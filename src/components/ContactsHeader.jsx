@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -7,11 +8,11 @@ import { MdIndeterminateCheckBox } from "react-icons/md";
 
 import ContactsSearch from "./ContactsSearch";
 import { useContacts } from "../context/ContactsContext";
+import api from "../services/config";
+import { updateContacts } from "../helpers/helper";
 import Modal from "./Modal";
 
 import styles from "./ContactsHeader.module.css";
-import { updateContacts } from "../helpers/helper";
-import api from "../services/config";
 
 function ContactsHeader() {
   const {
@@ -31,7 +32,17 @@ function ContactsHeader() {
   };
 
   const deleteHandler = async () => {
-    console.log("delete");
+    try {
+      await axios.all(
+        checkedContacts.map((item) => api.delete(`/api.contacts/${item}`))
+      );
+      toast.success(`${checkedContacts.length} مخاطب با موفقیت حذف شد.`);
+      setIsOpen(false);
+    } catch (error) {
+      return toast.error(error.message);
+    }
+    updateContacts(dispatch, toast);
+    unSelectHandler();
   };
 
   return (
