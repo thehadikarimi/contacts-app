@@ -6,11 +6,13 @@ import NewContactPage from "./pages/NewContactPage";
 import PageNotFound from "./pages/404";
 import Layout from "./layout/Layout";
 import ContactsProvider from "./context/ContactsContext";
+import ScrollToTop from "./shared/ScrollToTop";
 
 function App() {
   return (
     <ContactsProvider>
       <Layout>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" replace />} />
           <Route path="/contacts" element={<ContactsPage />} />

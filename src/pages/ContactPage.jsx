@@ -18,13 +18,13 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FiArrowRight } from "react-icons/fi";
 
 import ContactForm from "../components/ContactForm";
-import Loader from "../components/Loader";
+import Loader from "../shared/Loader";
+import Modal from "../shared/Modal";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
 import { updateContacts } from "../helpers/helper";
 
 import styles from "./ContactPage.module.css";
-import Modal from "../components/Modal";
 
 function ContactPage() {
   const { dispatch } = useContacts();

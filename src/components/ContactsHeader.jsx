@@ -10,7 +10,7 @@ import ContactsSearch from "./ContactsSearch";
 import { useContacts } from "../context/ContactsContext";
 import api from "../services/config";
 import { updateContacts } from "../helpers/helper";
-import Modal from "./Modal";
+import Modal from "../shared/Modal";
 
 import styles from "./ContactsHeader.module.css";
 

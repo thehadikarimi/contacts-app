@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 
 import avatarImg from "../assets/img/contact.png";
 
-import Modal from "./Modal";
+import Modal from "../shared/Modal";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
 import { updateContacts } from "../helpers/helper";

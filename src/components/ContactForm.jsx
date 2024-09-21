@@ -12,7 +12,7 @@ import { MdOutlineEdit, MdOutlineMail } from "react-icons/md";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
 import { updateContacts } from "../helpers/helper";
-import Loader from "./Loader";
+import Loader from "../shared/Loader";
 
 import styles from "./ContactForm.module.css";
 

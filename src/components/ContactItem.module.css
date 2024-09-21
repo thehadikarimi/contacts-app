@@ -75,7 +75,7 @@
 
 .ContactInfo {
   display: flex;
-  width: calc(100% - 200px);
+  width: calc(100% - 220px);
 }
 
 .ContactInfo div {
@@ -89,6 +89,19 @@
 
 .ContactInfo div:nth-child(2) {
   width: 50%;
+}
+
+.ContactInfo div span {
+  display: inline-block;
+  width: calc(100% - 10px);
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+}
+
+.ContactInfo div:nth-child(2) span {
+  direction: ltr;
+  text-align: right;
 }
 
 .ContactAction {

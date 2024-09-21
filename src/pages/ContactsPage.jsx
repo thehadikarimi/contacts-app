@@ -7,7 +7,7 @@ import { IoAddOutline } from "react-icons/io5";
 import ContactItem from "../components/ContactItem";
 import ContactsHeader from "../components/ContactsHeader";
 import FavoriteContacts from "../components/FavoriteContacts";
-import Loader from "../components/Loader";
+import Loader from "../shared/Loader";
 
 import { useContacts } from "../context/ContactsContext";
 
