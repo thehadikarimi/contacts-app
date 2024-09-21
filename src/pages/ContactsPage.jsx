@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,8 +16,13 @@ import styles from "./ContactsPage.module.css";
 function ContactsPage() {
   const {
     state: { contacts, loading },
+    dispatch,
   } = useContacts();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch({ type: "ADD_CHECKED_CONTACT", payload: [] });
+  }, []);
 
   if (loading) return <Loader />;
 
