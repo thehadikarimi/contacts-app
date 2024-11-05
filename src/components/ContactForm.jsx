@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { v4 } from "uuid";
 
@@ -12,15 +12,14 @@ import { MdOutlineEdit, MdOutlineMail } from "react-icons/md";
 import api from "../services/config";
 import { useContacts } from "../context/ContactsContext";
 import { updateContacts } from "../helpers/helper";
-import Loader from "../shared/Loader";
 
 import styles from "./ContactForm.module.css";
 
-function ContactForm({ isEdit }) {
-  const { id } = useParams();
+function ContactForm({ isEdit, data }) {
   const { dispatch } = useContacts();
   const [contact, setContact] = useState("");
   const [contactAvatar, setContactAvatar] = useState("");
+  const [loading, setLoading] = useState(false);
   const initialData = {
     id: "",
     name: "",
@@ -64,13 +63,12 @@ function ContactForm({ isEdit }) {
     }
 
     const fetchContact = async ([type, data]) => {
+      setLoading(true);
       if (type === "PUT") {
         try {
           await api.put(`/api.contacts/${data.id}`, data);
           toast.success("مخاطب با موفقیت ذخیره شد.");
-          setTimeout(() => {
-            navigate(`/contacts/${data.id}`);
-          }, 3000);
+          navigate(`/contacts/${data.id}`);
         } catch (error) {
           return toast.error(error.message);
         }
@@ -79,14 +77,13 @@ function ContactForm({ isEdit }) {
         try {
           await api.post("/api.contacts/", data);
           toast.success("مخاطب با موفقیت افزوده شد.");
-          setTimeout(() => {
-            navigate("/contacts");
-          }, 3000);
+          navigate("/contacts");
         } catch (error) {
           return toast.error(error.message);
         }
       }
       updateContacts(dispatch, toast);
+      setLoading(false);
     };
 
     if (isEdit) {
@@ -108,113 +105,105 @@ function ContactForm({ isEdit }) {
   };
 
   useEffect(() => {
-    const contact = async () => {
-      if (isEdit) {
-        const contact = await api.get(`/api.contacts/${id}`);
-        setContact(contact);
-        setContactAvatar(contact.avatar);
-      } else {
-        setContact(initialData);
-        setContactAvatar(avatarImg);
-      }
-    };
-
-    contact();
+    if (isEdit) {
+      setContact(data);
+      setContactAvatar(data.avatar);
+    } else {
+      setContact(initialData);
+      setContactAvatar(avatarImg);
+    }
   }, []);
 
-  if (!contact) return <Loader />;
-
   return (
-    <>
-      <form onSubmit={contactHandler} className={styles.ContactForm}>
-        <div className={styles.contactAvatar}>
-          <label htmlFor="contact-image">
-            <input
-              id="contact-image"
-              name="contact-image"
-              type="file"
-              accept="image/png, image/jpg, image/jpeg, image/webp"
-              onChange={fileHandler}
-            />
-            <img src={contactAvatar} />
-            <button>
-              {contactAvatar === avatarImg ? (
-                <IoAddOutline />
-              ) : (
-                <MdOutlineEdit />
-              )}
-            </button>
-          </label>
-        </div>
-        <div className={styles.contactFormInner}>
-          <div className={styles.inputContainer}>
-            <div>
-              <FaRegUser />
-            </div>
-            <div>
-              <div className={styles.inputFields}>
-                <label htmlFor="name">نام</label>
-                <input
-                  type="text"
-                  name="name"
-                  autoComplete="off"
-                  value={contact.name}
-                  onChange={changeHandler}
-                />
-              </div>
-              <div className={styles.inputFields}>
-                <label htmlFor="lastName">نام خانوادگی</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  autoComplete="off"
-                  value={contact.lastName}
-                  onChange={changeHandler}
-                />
-              </div>
-            </div>
+    <form onSubmit={contactHandler} className={styles.ContactForm}>
+      <div className={styles.contactAvatar}>
+        <label htmlFor="contact-image">
+          <input
+            id="contact-image"
+            name="contact-image"
+            type="file"
+            accept="image/png, image/jpg, image/jpeg, image/webp"
+            onChange={fileHandler}
+          />
+          <img src={contactAvatar} />
+          <button>
+            {contactAvatar === avatarImg ? <IoAddOutline /> : <MdOutlineEdit />}
+          </button>
+        </label>
+      </div>
+      <div className={styles.contactFormInner}>
+        <div className={styles.inputContainer}>
+          <div>
+            <FaRegUser />
           </div>
-          <div className={styles.inputContainer}>
-            <div>
-              <MdOutlineMail />
+          <div>
+            <div className={styles.inputFields}>
+              <label htmlFor="name">نام</label>
+              <input
+                type="text"
+                name="name"
+                autoComplete="off"
+                value={contact.name}
+                onChange={changeHandler}
+              />
             </div>
-            <div>
-              <div className={styles.inputFields}>
-                <label htmlFor="email">آدرس ایمیل</label>
-                <input
-                  type="email"
-                  name="email"
-                  autoComplete="off"
-                  value={contact.email}
-                  onChange={changeHandler}
-                />
-              </div>
+            <div className={styles.inputFields}>
+              <label htmlFor="lastName">نام خانوادگی</label>
+              <input
+                type="text"
+                name="lastName"
+                autoComplete="off"
+                value={contact.lastName}
+                onChange={changeHandler}
+              />
             </div>
-          </div>
-          <div className={styles.inputContainer}>
-            <div>
-              <FaPhoneAlt />
-            </div>
-            <div>
-              <div className={styles.inputFields}>
-                <label htmlFor="phoneNumber">شماره تلفن</label>
-                <input
-                  type="tel"
-                  name="phoneNumber"
-                  autoComplete="off"
-                  value={contact.phoneNumber}
-                  onChange={changeHandler}
-                  maxLength={11}
-                />
-              </div>
-            </div>
-          </div>
-          <div className={styles.submitBtnContainer}>
-            <button type="submit">{isEdit ? "ذخیره" : "افزودن"}</button>
           </div>
         </div>
-      </form>
-    </>
+        <div className={styles.inputContainer}>
+          <div>
+            <MdOutlineMail />
+          </div>
+          <div>
+            <div className={styles.inputFields}>
+              <label htmlFor="email">آدرس ایمیل</label>
+              <input
+                type="email"
+                name="email"
+                autoComplete="off"
+                value={contact.email}
+                onChange={changeHandler}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={styles.inputContainer}>
+          <div>
+            <FaPhoneAlt />
+          </div>
+          <div>
+            <div className={styles.inputFields}>
+              <label htmlFor="phoneNumber">شماره تلفن</label>
+              <input
+                type="tel"
+                name="phoneNumber"
+                autoComplete="off"
+                value={contact.phoneNumber}
+                onChange={changeHandler}
+                maxLength={11}
+              />
+            </div>
+          </div>
+        </div>
+        <div className={styles.submitBtnContainer}>
+          <button
+            type="submit"
+            className={loading ? styles.disable : undefined}
+          >
+            {isEdit ? "ذخیره" : "افزودن"}
+          </button>
+        </div>
+      </div>
+    </form>
   );
 }
 

@@ -5,8 +5,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import {
   MdFavorite,
   MdFavoriteBorder,
@@ -64,9 +63,7 @@ function ContactPage() {
       return toast.error(error.message);
     }
     updateContacts(dispatch, toast);
-    setTimeout(() => {
-      navigate("/contacts");
-    }, 3000);
+    navigate("/contacts");
   };
 
   useEffect(() => {
@@ -85,13 +82,13 @@ function ContactPage() {
             </Link>
             <h2>ویرایش مخاطب</h2>
           </div>
-          <ContactForm isEdit={true} />
+          <ContactForm isEdit={true} data={contact} />
         </div>
       ) : (
         <div className={styles.contactContainer}>
           <div className={styles.contactAction}>
             <div>
-              <Link to={`/contacts/`}>
+              <Link to={`/contacts`}>
                 <FiArrowRight />
               </Link>
             </div>
@@ -145,7 +142,6 @@ function ContactPage() {
           </div>
         </div>
       )}
-      <ToastContainer rtl={true} autoClose={2000} pauseOnFocusLoss={false} />
       {!!isOpen && (
         <Modal
           setIsOpen={setIsOpen}

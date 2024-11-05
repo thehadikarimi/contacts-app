@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { IoAddOutline } from "react-icons/io5";
 
 import ContactItem from "../components/ContactItem";
@@ -66,7 +64,6 @@ function ContactsPage() {
           <span>ایجاد مخاطب جدید</span>
         </button>
       </div>
-      <ToastContainer rtl={true} autoClose={2000} pauseOnFocusLoss={false} />
     </>
   );
 }

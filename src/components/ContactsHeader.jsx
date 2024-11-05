@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { IoMdDoneAll } from "react-icons/io";
 import { MdIndeterminateCheckBox } from "react-icons/md";

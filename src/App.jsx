@@ -1,4 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import ContactsPage from "./pages/ContactsPage";
 import ContactPage from "./pages/ContactPage";
@@ -21,6 +23,7 @@ function App() {
           <Route path="/*" element={<PageNotFound />} />
         </Routes>
       </Layout>
+      <ToastContainer rtl={true} autoClose={2000} pauseOnFocusLoss={false} />
     </ContactsProvider>
   );
 }

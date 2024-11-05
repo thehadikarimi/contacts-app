@@ -129,3 +129,8 @@
 .submitBtnContainer button:hover {
   background-color: var(--color-primary-700);
 }
+
+.submitBtnContainer button.disable {
+  background-color: var(--color-neutral-500);
+  pointer-events: none;
+}
