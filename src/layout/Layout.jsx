@@ -19,7 +19,7 @@ function Layout({ children }) {
           </div>
         </div>
       </header>
-      {children}
+      <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <div>
           <p>توسعه داده شده توسط هادی کریمی با ❤️</p>
