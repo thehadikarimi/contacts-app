@@ -69,8 +69,9 @@ function ContactForm({ isEdit, data }) {
           await api.put(`/api.contacts/${data.id}`, data);
           toast.success("مخاطب با موفقیت ذخیره شد.");
           navigate(`/contacts/${data.id}`);
+          updateContacts(dispatch, toast);
         } catch (error) {
-          return toast.error(error.message);
+          toast.error(error.message);
         }
       }
       if (type === "POST") {
@@ -78,11 +79,11 @@ function ContactForm({ isEdit, data }) {
           await api.post("/api.contacts/", data);
           toast.success("مخاطب با موفقیت افزوده شد.");
           navigate("/contacts");
+          updateContacts(dispatch, toast);
         } catch (error) {
-          return toast.error(error.message);
+          toast.error(error.message);
         }
       }
-      updateContacts(dispatch, toast);
       setLoading(false);
     };
 
