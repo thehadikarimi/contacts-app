@@ -36,14 +36,14 @@ function ContactPage() {
   const navigate = useNavigate();
 
   const getContact = async () => {
-    const contact = await api.get(`/api.contacts/${id}`);
+    const contact = await api.get(`/contacts/${id}`);
     setContact(contact);
   };
 
   const favoriteHandler = async () => {
     const favorite = !contact.favorite;
     try {
-      await api.patch(`/api.contacts/${id}`, { favorite });
+      await api.patch(`/contacts/${id}`, { favorite });
       favorite
         ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
         : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
@@ -56,7 +56,7 @@ function ContactPage() {
 
   const deleteHandler = async () => {
     try {
-      await api.delete(`/api.contacts/${id}`);
+      await api.delete(`/contacts/${id}`);
       toast.success("مخاطب با موفقیت حذف شد.");
       setIsOpen(false);
     } catch (error) {

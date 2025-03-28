@@ -22,7 +22,12 @@ function Layout({ children }) {
       <main className={styles.main}>{children}</main>
       <footer className={styles.footer}>
         <div>
-          <p>توسعه داده شده توسط هادی کریمی با ❤️</p>
+          <p>
+            توسعه داده شده با ❤️ توسط{" "}
+            <Link to="https://github.com/thehadikarimi/contacts-app">
+              thehadikarimi
+            </Link>
+          </p>
         </div>
       </footer>
     </>

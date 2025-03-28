@@ -38,7 +38,7 @@ function ContactItem({ data }) {
 
   const favoriteHandler = async () => {
     try {
-      await api.patch(`/api.contacts/${id}`, { favorite: !favorite });
+      await api.patch(`/contacts/${id}`, { favorite: !favorite });
       !favorite
         ? toast.success("مخاطب به لیست علاقه مندی اضافه شد.")
         : toast.success("مخاطب از لیست علاقه مندی حذف شد.");
@@ -50,7 +50,7 @@ function ContactItem({ data }) {
 
   const deleteHandler = async () => {
     try {
-      await api.delete(`/api.contacts/${id}`);
+      await api.delete(`/contacts/${id}`);
       toast.success("مخاطب با موفقیت حذف شد.");
       setIsOpen(false);
     } catch (error) {

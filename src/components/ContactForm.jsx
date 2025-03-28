@@ -66,7 +66,7 @@ function ContactForm({ isEdit, data }) {
       setLoading(true);
       if (type === "PUT") {
         try {
-          await api.put(`/api.contacts/${data.id}`, data);
+          await api.put(`/contacts/${data.id}`, data);
           toast.success("مخاطب با موفقیت ذخیره شد.");
           navigate(`/contacts/${data.id}`);
           updateContacts(dispatch, toast);
@@ -76,7 +76,7 @@ function ContactForm({ isEdit, data }) {
       }
       if (type === "POST") {
         try {
-          await api.post("/api.contacts/", data);
+          await api.post("/contacts/", data);
           toast.success("مخاطب با موفقیت افزوده شد.");
           navigate("/contacts");
           updateContacts(dispatch, toast);

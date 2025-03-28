@@ -33,7 +33,7 @@ function ContactsHeader() {
   const deleteHandler = async () => {
     try {
       await axios.all(
-        checkedContacts.map((item) => api.delete(`/api.contacts/${item}`))
+        checkedContacts.map((item) => api.delete(`/contacts/${item}`))
       );
       toast.success(`${checkedContacts.length} مخاطب با موفقیت حذف شد.`);
       setIsOpen(false);

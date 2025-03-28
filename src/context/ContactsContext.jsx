@@ -51,7 +51,7 @@ function ContactsProvider({ children }) {
   useEffect(() => {
     const fetchContacts = async () => {
       try {
-        const contacts = await api.get("/api.contacts");
+        const contacts = await api.get("/contacts/");
         dispatch({ type: "SUCCESS", payload: contacts });
       } catch (error) {
         dispatch({ type: "FAILED", payload: error.message });
